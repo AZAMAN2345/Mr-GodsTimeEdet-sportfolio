@@ -11,6 +11,7 @@ import fibreOpticsIcon from "./assets/godstime_individual_icons/glowing_fiber_op
 import networkIcon from "./assets/godstime_individual_icons/glossy_blue_violet_network_icon.png";
 import trainingIcon from "./assets/godstime_individual_icons/glossy_3d_teacher_presentation_icon.png";
 import "./App.css";
+import "./PresentDay.css";
 
 const tech = [
   ["Python", pythonIcon],
@@ -91,6 +92,56 @@ const gallery = [
   ["Teamwork", "Building together", "gallery-teamwork.png"],
   ["Personal Portrait", "Beyond the workspace", "gallery-personal-portrait.png"],
 ];
+const projects = [
+  [
+    "Fake News Sentiment Analysis",
+    "An NLP system for detecting false information and analysing sentiment in news content.",
+    ["Jupyter Notebook", "Python", "NLP"],
+    "implementation-of-Sentiment-Analysis-using-Natural-Language-Processing",
+    null,
+    ["Natural-language processing workflow", "Fake-news detection and sentiment analysis", "Exploratory analysis in Jupyter"],
+  ],
+  [
+    "5G Path Loss Prediction",
+    "Machine learning applied to satellite imagery to predict path loss in 5G networks.",
+    ["Python", "Machine Learning"],
+    "5G-Path-Loss-Prediction-Satellite-Images",
+    "project-5g-path-loss.png",
+    ["Satellite-image feature analysis", "Machine-learning prediction pipeline", "5G network planning insights"],
+  ],
+  [
+    "Bank Marketing Prediction",
+    "An SVM classification model that predicts whether a customer will subscribe to a term deposit.",
+    ["Jupyter Notebook", "Python", "SVM"],
+    "Bank-Marketing-Data-Set-Prediction-Using-SVM",
+    "project-bank-marketing.png",
+    ["Customer-segment analysis", "Support Vector Machine classification", "Subscription likelihood prediction"],
+  ],
+  [
+    "Employee Performance Analysis",
+    "A data-preprocessing workflow that prepares employee performance data for reliable analysis.",
+    ["Python", "Data Preprocessing"],
+    "data-pre-processing-for-employees-performance-analysis",
+    "project-employee-performance.png",
+    ["Data cleaning and preparation", "Performance metric exploration", "Analysis-ready employee dataset"],
+  ],
+  [
+    "Rice Leaf CNN Prediction",
+    "A convolutional neural network project for classifying and predicting rice leaf conditions.",
+    ["Jupyter Notebook", "Python", "CNN"],
+    "RiceLeafCNNPrediction",
+    "project-rice-cnn.png",
+    ["Rice-leaf image classification", "CNN-based disease detection", "Healthy and diseased leaf prediction"],
+  ],
+  [
+    "Serverless AWS Web App",
+    "A serverless web application built with JavaScript and deployed on AWS infrastructure.",
+    ["JavaScript", "AWS", "Serverless"],
+    "Serverless-Web-Application-on-AWS-main-gt",
+    "project-serverless-aws.png",
+    ["Scalable serverless architecture", "Integrated AWS services", "Responsive JavaScript frontend"],
+  ],
+];
 const asset = (name) => `/assets/${name}`;
 function Avatar() {
   return <img className="avatar" src={profilePhoto} alt="Godstime Edet" />;
@@ -103,7 +154,7 @@ function Header({ dark, setDark }) {
         Godstime Edet
       </a>
       <nav>
-        {["Home", "About", "Certifications", "Experience"].map((x) => (
+        {["Home", "About", "Certifications", "Projects", "Experience"].map((x) => (
           <a key={x} href={`#${x.toLowerCase()}`}>
             {x}
           </a>
@@ -320,43 +371,85 @@ function Journey() {
   );
 }
 function PresentDay() {
+  const [selectedPhoto, setSelectedPhoto] = useState(0);
+  const photos = [
+    ["neocloud-reception.jpeg", "Neo Cloud Technologies reception in Abuja"],
+    ["neocloud-training.jpg", "A practical training session at Neo Cloud Technologies"],
+    ["neocloud-workspace.jpeg", "Software development at Neo Cloud Technologies"],
+    ["neocloud-school.jpg", "Hands-on learning at Neo Cloud Technologies"],
+    ["neocloud-abuja.jpg", "Neo Cloud Technologies community in Abuja"],
+  ];
+  useEffect(() => {
+    const timer = window.setInterval(
+      () => setSelectedPhoto((current) => (current + 1) % photos.length),
+      4500,
+    );
+    return () => window.clearInterval(timer);
+  }, [photos.length]);
   return (
-    <section className="present-day section">
-      <div className="section-intro">
-        <span className="kicker">PRESENT DAY</span>
-        <h2>
+    <section className="present-showcase section" aria-labelledby="present-title">
+      <div className="present-overview">
+        <h2 id="present-title">
           Neo Cloud
           <br />
           <em>Technologies</em>
         </h2>
-        <p>Building technology, people and a brighter tomorrow.</p>
-      </div>
-      <div className="neo-brand" aria-label="Neo Cloud Technologies">
-        <img src={asset("neo-cloud-logo.png")} alt="Neo Cloud Technologies" />
-      </div>
-      <div className="present-copy">
-        <p>
-          <strong>Neo Cloud Technologies</strong> is an Abuja-based
+        <p className="present-lead">Building technology, people and a brighter tomorrow.</p>
+        <p className="present-description">
+          Neo Cloud Technologies is an Abuja-based
           multi-product IT firm providing software development, data science,
           cybersecurity, IT consulting, and technical training services. The
           company combines technology solutions with capacity-development
           programs designed to help individuals and organizations build
           practical digital skills.
         </p>
-        <p>
-          <strong>My role at Neo Cloud:</strong> I have grown across three major
-          positions within the company &mdash;{" "}
-          <strong>
-            Lead Software Engineer, Data Scientist, and Head of Training,
-            Research &amp; Development
-          </strong>
-          . My work spans building software solutions, applying data science and
-          machine learning to real-world problems, and leading technical
-          training, research, mentorship, and development initiatives.
-        </p>
-        <a className="image-button" href="#experience">
-          <img src={asset("button_view_my_work.png")} alt="View my work" />
-        </a>
+        <div className="present-actions">
+          <a className="button" href="#projects">View My Work</a>
+          <a className="button outline" href="https://techneo.ng/" target="_blank" rel="noreferrer">About Neo Cloud</a>
+        </div>
+      </div>
+      <div className="present-photos">
+        {photos.map(([file, description], index) => (
+          <img
+            className={`present-main-photo ${selectedPhoto === index ? "active" : ""}`}
+            src={asset(file)}
+            alt={selectedPhoto === index ? description : ""}
+            aria-hidden={selectedPhoto !== index}
+            loading="lazy"
+            key={file}
+          />
+        ))}
+        <div className="present-thumbnails" role="group" aria-label="Neo Cloud photos">
+          {photos.map(([file, description], index) => (
+            <button
+              key={file}
+              type="button"
+              aria-label={`Show photo: ${description}`}
+              aria-pressed={selectedPhoto === index}
+              onClick={() => setSelectedPhoto(index)}
+            >
+              <img src={asset(file)} alt="" loading="lazy" />
+            </button>
+          ))}
+        </div>
+        <p className="present-photo-caption">Turning ideas into<br />real-world impact.</p>
+        <span className="present-location">Abuja, Nigeria</span>
+      </div>
+      <div className="present-bottom">
+        <div className="present-role-panel">
+          <div className="present-role-title">
+            <span className="kicker">My Role at Neo Cloud</span>
+            <h3>Lead Software Engineer,<br />Data Scientist &amp; Head of Training, Research &amp; Development.</h3>
+          </div>
+          <div className="present-role-description">
+            <p>
+              I have grown across three major positions within the company. My work
+              spans building software solutions, applying data science and machine
+              learning to real-world problems, and leading technical training,
+              research, mentorship, and development initiatives.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -400,6 +493,94 @@ function Gallery() {
     </section>
   );
 }
+function Projects() {
+  const [active, setActive] = useState(null);
+  return (
+    <section className="projects section" id="projects">
+      <div className="projects-head">
+        <div>
+          <span className="kicker">FEATURED GITHUB PROJECTS</span>
+          <h2>
+            Turning data into <em>working solutions.</em>
+          </h2>
+          <p>
+            A collection of real-world projects showcasing skills in data
+            science, machine learning, and cloud development.
+          </p>
+        </div>
+        <a
+          className="view-github"
+          href="https://github.com/GodstimeEdet?tab=repositories"
+          target="_blank"
+          rel="noreferrer"
+        >
+          View all repositories <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <div className="project-list">
+        {projects.map(
+          ([title, description, tags, repository, image, highlights], index) => {
+            const open = active === index;
+            return (
+              <article className={`project-row ${open ? "open" : ""}`} key={repository}>
+                <button
+                  className="project-summary"
+                  id={`project-trigger-${index}`}
+                  type="button"
+                  aria-expanded={open}
+                  aria-controls={`project-${index}`}
+                  onClick={() => setActive(open ? null : index)}
+                >
+                  <span className="project-number">0{index + 1}.</span>
+                  <svg className="project-folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                    <path d="M3 7V5a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
+                    <path d="M3 9h18" />
+                  </svg>
+                  <strong>{title}</strong>
+                  <span className="project-toggle" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 18 18 6M6 6h12v12" /></svg>
+                  </span>
+                </button>
+                <div className="project-reveal" id={`project-${index}`} role="region" aria-labelledby={`project-trigger-${index}`} aria-hidden={!open} inert={!open}>
+                  <div className="project-reveal-inner">
+                  <div className="project-details">
+                  <div className={`project-art ${image ? "" : "project-art-placeholder"}`}>
+                    {image ? (
+                      <img src={asset(image)} alt={`${title} project illustration`} />
+                    ) : (
+                      <><b>NLP</b><span>Fake-news sentiment analysis</span></>
+                    )}
+                  </div>
+                  <div className="project-detail-copy">
+                    <span className="project-label">PROJECT 0{index + 1}</span>
+                    <h3>{title}</h3>
+                    <div className="project-tags">
+                      {tags.map((tag) => <span key={tag}>{tag}</span>)}
+                    </div>
+                    <p>{description}</p>
+                    <ul>
+                      {highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+                    </ul>
+                    <a
+                      href={`https://github.com/GodstimeEdet/${repository}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img src={asset("icon_github.png")} alt="" />
+                      View on GitHub <span aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                  </div>
+                  </div>
+                </div>
+              </article>
+            );
+          },
+        )}
+      </div>
+    </section>
+  );
+}
 function App() {
   const [dark, setDark] = useState(false);
   return (
@@ -409,6 +590,7 @@ function App() {
         <Hero />
         <About />
         <Certifications />
+        <Projects />
         <Journey />
         <PresentDay />
         <Gallery />
@@ -427,12 +609,27 @@ function App() {
           >
             <img src={asset("icon_linkedin.png")} alt="" />
           </a>
+          <a
+            className="social-button github-button"
+            href="https://github.com/GodstimeEdet"
+            aria-label="GitHub"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.58 9.58 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" />
+            </svg>
+            <span>GitHub</span>
+          </a>
           <button
+            className="social-button top-button"
             type="button"
             aria-label="Back to top"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            <img src={asset("icon_external_link.png")} alt="" />
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 14 6-6 6 6" />
+            </svg>
           </button>
         </div>
       </footer>
