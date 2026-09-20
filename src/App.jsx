@@ -84,14 +84,6 @@ const journey = [
     "Worked remotely on data science projects and analysis.",
   ],
 ];
-const gallery = [
-  ["Workspace", "Building solutions", "gallery-workspace.png"],
-  ["Leadership", "Leading with vision", "gallery-leadership.png"],
-  ["Recognition", "Award of excellence", "gallery-award.png"],
-  ["Industry Engagement", "Collaboration in action", "gallery-engagement.png"],
-  ["Teamwork", "Building together", "gallery-teamwork.png"],
-  ["Personal Portrait", "Beyond the workspace", "gallery-personal-portrait.png"],
-];
 const projects = [
   [
     "Fake News Sentiment Analysis",
@@ -454,45 +446,6 @@ function PresentDay() {
     </section>
   );
 }
-function Gallery() {
-  const track = useRef(null);
-  const move = (direction) =>
-    track.current?.scrollBy({ left: direction * 280, behavior: "smooth" });
-
-  return (
-    <section className="gallery section" id="gallery">
-      <div className="section-intro">
-        <span className="kicker">GALLERY</span>
-        <h2>
-          Moments,
-          <br />
-          <em>Portraits &amp; More.</em>
-        </h2>
-        <p>
-          A few glimpses into my professional journey from work, speaking
-          engagements, training sessions, and everyday moments.
-        </p>
-      </div>
-      <button onClick={() => move(-1)} aria-label="Previous gallery photos">
-        <img src={asset("icon_arrow_prev.png")} alt="" />
-      </button>
-      <div className="gallery-track" ref={track}>
-        {gallery.map(([title, subtitle, image]) => (
-          <article className="gallery-card" key={title}>
-            <img src={asset(image)} alt={title} />
-            <div>
-              <strong>{title}</strong>
-              <span>{subtitle}</span>
-            </div>
-          </article>
-        ))}
-      </div>
-      <button onClick={() => move(1)} aria-label="Next gallery photos">
-        <img src={asset("icon_arrow_next.png")} alt="" />
-      </button>
-    </section>
-  );
-}
 function Projects() {
   const [active, setActive] = useState(null);
   return (
@@ -593,7 +546,6 @@ function App() {
         <Projects />
         <Journey />
         <PresentDay />
-        <Gallery />
       </main>
       <footer id="contact">
         <span>© 2026 Godstime Edet. All rights reserved.</span>
