@@ -12,6 +12,7 @@ import networkIcon from "./assets/godstime_individual_icons/glossy_blue_violet_n
 import trainingIcon from "./assets/godstime_individual_icons/glossy_3d_teacher_presentation_icon.png";
 import "./App.css";
 import "./PresentDay.css";
+import Projects from "./Projects.jsx";
 
 const tech = [
   ["Python", pythonIcon],
@@ -84,56 +85,6 @@ const journey = [
     "Worked remotely on data science projects and analysis.",
   ],
 ];
-const projects = [
-  [
-    "Fake News Sentiment Analysis",
-    "An NLP system for detecting false information and analysing sentiment in news content.",
-    ["Jupyter Notebook", "Python", "NLP"],
-    "implementation-of-Sentiment-Analysis-using-Natural-Language-Processing",
-    null,
-    ["Natural-language processing workflow", "Fake-news detection and sentiment analysis", "Exploratory analysis in Jupyter"],
-  ],
-  [
-    "5G Path Loss Prediction",
-    "Machine learning applied to satellite imagery to predict path loss in 5G networks.",
-    ["Python", "Machine Learning"],
-    "5G-Path-Loss-Prediction-Satellite-Images",
-    "project-5g-path-loss.png",
-    ["Satellite-image feature analysis", "Machine-learning prediction pipeline", "5G network planning insights"],
-  ],
-  [
-    "Bank Marketing Prediction",
-    "An SVM classification model that predicts whether a customer will subscribe to a term deposit.",
-    ["Jupyter Notebook", "Python", "SVM"],
-    "Bank-Marketing-Data-Set-Prediction-Using-SVM",
-    "project-bank-marketing.png",
-    ["Customer-segment analysis", "Support Vector Machine classification", "Subscription likelihood prediction"],
-  ],
-  [
-    "Employee Performance Analysis",
-    "A data-preprocessing workflow that prepares employee performance data for reliable analysis.",
-    ["Python", "Data Preprocessing"],
-    "data-pre-processing-for-employees-performance-analysis",
-    "project-employee-performance.png",
-    ["Data cleaning and preparation", "Performance metric exploration", "Analysis-ready employee dataset"],
-  ],
-  [
-    "Rice Leaf CNN Prediction",
-    "A convolutional neural network project for classifying and predicting rice leaf conditions.",
-    ["Jupyter Notebook", "Python", "CNN"],
-    "RiceLeafCNNPrediction",
-    "project-rice-cnn.png",
-    ["Rice-leaf image classification", "CNN-based disease detection", "Healthy and diseased leaf prediction"],
-  ],
-  [
-    "Serverless AWS Web App",
-    "A serverless web application built with JavaScript and deployed on AWS infrastructure.",
-    ["JavaScript", "AWS", "Serverless"],
-    "Serverless-Web-Application-on-AWS-main-gt",
-    "project-serverless-aws.png",
-    ["Scalable serverless architecture", "Integrated AWS services", "Responsive JavaScript frontend"],
-  ],
-];
 const asset = (name) => `/assets/${name}`;
 function Avatar() {
   return <img className="avatar" src={profilePhoto} alt="Godstime Edet" />;
@@ -142,8 +93,8 @@ function Header({ dark, setDark }) {
   return (
     <header className="header">
       <a className="brand" href="#home">
-        <i />
-        Godstime Edet
+        <img src={asset("logo.png")} alt="" />
+        odstime Edet
       </a>
       <nav>
         {["Home", "About", "Certifications", "Projects", "Experience"].map((x) => (
@@ -328,7 +279,7 @@ function Certifications() {
 function Journey() {
   return (
     <section className="journey section" id="experience">
-      <div className="section-intro">
+      <div className="section-intro journey-intro">
         <span className="kicker">MY JOURNEY</span>
         <h2>
           From Graduation
@@ -341,19 +292,23 @@ function Journey() {
         </p>
       </div>
       <div className="timeline">
-        {journey.map(([date, icon, role, company, detail]) => (
-          <div className="timeline-row" key={`${date}-${role}`}>
-            <time>{date}</time>
-            <i className="dot" />
+        {journey.map(([date, icon, role, company, detail], index) => (
+          <article
+            className={`timeline-row ${index % 2 ? "timeline-left" : "timeline-right"}`}
+            key={`${date}-${role}`}
+          >
             <div className="role-icon">
               <img src={icon} alt="" />
             </div>
             <div className="role">
+              <time>{date}</time>
+              <b className="role-number">0{index + 1}</b>
               <strong>{role}</strong>
               <span>{company}</span>
+              <p>{detail}</p>
             </div>
-            <p>{detail}</p>
-          </div>
+            <i className="dot" />
+          </article>
         ))}
         <div className="timeline-arrow" aria-hidden="true">
           <span>PRESENT DAY</span>
@@ -442,94 +397,6 @@ function PresentDay() {
             </p>
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-function Projects() {
-  const [active, setActive] = useState(null);
-  return (
-    <section className="projects section" id="projects">
-      <div className="projects-head">
-        <div>
-          <span className="kicker">FEATURED GITHUB PROJECTS</span>
-          <h2>
-            Turning data into <em>working solutions.</em>
-          </h2>
-          <p>
-            A collection of real-world projects showcasing skills in data
-            science, machine learning, and cloud development.
-          </p>
-        </div>
-        <a
-          className="view-github"
-          href="https://github.com/GodstimeEdet?tab=repositories"
-          target="_blank"
-          rel="noreferrer"
-        >
-          View all repositories <span aria-hidden="true">→</span>
-        </a>
-      </div>
-      <div className="project-list">
-        {projects.map(
-          ([title, description, tags, repository, image, highlights], index) => {
-            const open = active === index;
-            return (
-              <article className={`project-row ${open ? "open" : ""}`} key={repository}>
-                <button
-                  className="project-summary"
-                  id={`project-trigger-${index}`}
-                  type="button"
-                  aria-expanded={open}
-                  aria-controls={`project-${index}`}
-                  onClick={() => setActive(open ? null : index)}
-                >
-                  <span className="project-number">0{index + 1}.</span>
-                  <svg className="project-folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                    <path d="M3 7V5a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
-                    <path d="M3 9h18" />
-                  </svg>
-                  <strong>{title}</strong>
-                  <span className="project-toggle" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 18 18 6M6 6h12v12" /></svg>
-                  </span>
-                </button>
-                <div className="project-reveal" id={`project-${index}`} role="region" aria-labelledby={`project-trigger-${index}`} aria-hidden={!open} inert={!open}>
-                  <div className="project-reveal-inner">
-                  <div className="project-details">
-                  <div className={`project-art ${image ? "" : "project-art-placeholder"}`}>
-                    {image ? (
-                      <img src={asset(image)} alt={`${title} project illustration`} />
-                    ) : (
-                      <><b>NLP</b><span>Fake-news sentiment analysis</span></>
-                    )}
-                  </div>
-                  <div className="project-detail-copy">
-                    <span className="project-label">PROJECT 0{index + 1}</span>
-                    <h3>{title}</h3>
-                    <div className="project-tags">
-                      {tags.map((tag) => <span key={tag}>{tag}</span>)}
-                    </div>
-                    <p>{description}</p>
-                    <ul>
-                      {highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
-                    </ul>
-                    <a
-                      href={`https://github.com/GodstimeEdet/${repository}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <img src={asset("icon_github.png")} alt="" />
-                      View on GitHub <span aria-hidden="true">→</span>
-                    </a>
-                  </div>
-                  </div>
-                  </div>
-                </div>
-              </article>
-            );
-          },
-        )}
       </div>
     </section>
   );
