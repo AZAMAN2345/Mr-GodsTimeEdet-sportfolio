@@ -111,7 +111,12 @@ function Header({ dark, setDark }) {
         >
           <img src={asset("button_dark_mode.png")} alt="" />
         </button>
-        <a className="image-button" href="#contact">
+        <a
+          className="image-button"
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=edtsamuel727@gmail.com"
+          target="_blank"
+          rel="noreferrer"
+        >
           <img src={asset("button_lets_talk.png")} alt="Let’s Talk" />
         </a>
       </div>
@@ -417,7 +422,11 @@ function App() {
       <footer id="contact">
         <span>© 2026 Godstime Edet. All rights reserved.</span>
         <div className="socials">
-          <a href="mailto:hello@godstimeedet.com">
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=edtsamuel727@gmail.com"
+            target="_blank"
+            rel="noreferrer"
+          >
             <img src={asset("icon_email.png")} alt="Email" />
           </a>
           <a
